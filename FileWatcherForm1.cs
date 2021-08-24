@@ -50,7 +50,7 @@ namespace FileWatcher
                         Status.Text = this.Status.Text + "\n" + PathArr[i];
                     }
                 }
-                Status.Text = this.Status.Text + "\n\n*************************************\n\n监视到的文件更改：\n";
+                Status.Text = this.Status.Text + "\n\n*************************************\n\n监视到的更改：\n";
                 Status.Select(Status.TextLength, 0); 
                 Status.ScrollToCaret();
                 try
