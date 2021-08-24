@@ -44,10 +44,9 @@ namespace FileWatcher
             this.TargetPath = new System.Windows.Forms.RichTextBox();
             this.StatusSwitch = new System.Windows.Forms.CheckBox();
             this.Status = new System.Windows.Forms.RichTextBox();
-            this.DelayTimer = new System.Windows.Forms.Timer(this.components);
             this.StatusTips = new System.Windows.Forms.Label();
             this.NowTime = new System.Windows.Forms.Label();
-            this.TimeTimer = new System.Windows.Forms.Timer(this.components);
+            this.SyncTimer = new System.Windows.Forms.Timer(this.components);
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -85,7 +84,7 @@ namespace FileWatcher
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(80, 10);
             label3.TabIndex = 7;
-            label3.Text = "版本号：1.3.0.2";
+            label3.Text = "版本号：1.5.0.3";
             // 
             // groupBox1
             // 
@@ -157,6 +156,7 @@ namespace FileWatcher
             this.WhetherCopy.TabIndex = 5;
             this.WhetherCopy.Text = "复制被更改对象";
             this.WhetherCopy.UseVisualStyleBackColor = true;
+            this.WhetherCopy.CheckedChanged += new System.EventHandler(this.WhetherCopy_CheckedChanged);
             // 
             // WatchWrite
             // 
@@ -200,12 +200,6 @@ namespace FileWatcher
             this.Status.TabIndex = 2;
             this.Status.Text = "";
             // 
-            // DelayTimer
-            // 
-            this.DelayTimer.Enabled = true;
-            this.DelayTimer.Interval = 1;
-            this.DelayTimer.Tick += new System.EventHandler(this.DelayTimer_Tick);
-            // 
             // StatusTips
             // 
             this.StatusTips.AutoSize = true;
@@ -230,11 +224,11 @@ namespace FileWatcher
             this.NowTime.Text = "(当前系统时间：yyyy-MM-dd HH:mm:ss)";
             this.NowTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TimeTimer
+            // SyncTimer
             // 
-            this.TimeTimer.Enabled = true;
-            this.TimeTimer.Interval = 1000;
-            this.TimeTimer.Tick += new System.EventHandler(this.TimeTimer_Tick);
+            this.SyncTimer.Enabled = true;
+            this.SyncTimer.Interval = 1;
+            this.SyncTimer.Tick += new System.EventHandler(this.SyncTimer_Tick);
             // 
             // FileWatcherForm1
             // 
@@ -273,12 +267,11 @@ namespace FileWatcher
         private System.Windows.Forms.CheckBox WatchWrite;
         private System.Windows.Forms.CheckBox WatchRename;
         private System.Windows.Forms.CheckBox Delay;
-        private System.Windows.Forms.RichTextBox Status;
-        private System.Windows.Forms.Timer DelayTimer;
         private System.Windows.Forms.TextBox InputDelayTime;
         private System.Windows.Forms.Label StatusTips;
         private System.Windows.Forms.Label NowTime;
-        private System.Windows.Forms.Timer TimeTimer;
+        internal System.Windows.Forms.RichTextBox Status;
+        private System.Windows.Forms.Timer SyncTimer;
     }
 }
 
