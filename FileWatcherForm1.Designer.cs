@@ -84,7 +84,7 @@ namespace FileWatcher
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(80, 10);
             label3.TabIndex = 7;
-            label3.Text = "版本号：1.5.0.3";
+            label3.Text = "版本号：1.5.0.4";
             // 
             // groupBox1
             // 
@@ -126,11 +126,11 @@ namespace FileWatcher
             // WhetherIncludeSub
             // 
             this.WhetherIncludeSub.AutoSize = true;
-            this.WhetherIncludeSub.Location = new System.Drawing.Point(48, 13);
+            this.WhetherIncludeSub.Location = new System.Drawing.Point(56, 14);
             this.WhetherIncludeSub.Name = "WhetherIncludeSub";
-            this.WhetherIncludeSub.Size = new System.Drawing.Size(96, 16);
+            this.WhetherIncludeSub.Size = new System.Drawing.Size(84, 16);
             this.WhetherIncludeSub.TabIndex = 6;
-            this.WhetherIncludeSub.Text = "包含子文件夹";
+            this.WhetherIncludeSub.Text = "包含子目录";
             this.WhetherIncludeSub.UseVisualStyleBackColor = true;
             // 
             // WatchRename
@@ -138,11 +138,11 @@ namespace FileWatcher
             this.WatchRename.AutoSize = true;
             this.WatchRename.Checked = true;
             this.WatchRename.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.WatchRename.Location = new System.Drawing.Point(378, 13);
+            this.WatchRename.Location = new System.Drawing.Point(389, 14);
             this.WatchRename.Name = "WatchRename";
-            this.WatchRename.Size = new System.Drawing.Size(84, 16);
+            this.WatchRename.Size = new System.Drawing.Size(72, 16);
             this.WatchRename.TabIndex = 9;
-            this.WatchRename.Text = "监视重命名";
+            this.WatchRename.Text = "监视更名";
             this.WatchRename.UseVisualStyleBackColor = true;
             // 
             // WhetherCopy
@@ -154,7 +154,7 @@ namespace FileWatcher
             this.WhetherCopy.Name = "WhetherCopy";
             this.WhetherCopy.Size = new System.Drawing.Size(108, 16);
             this.WhetherCopy.TabIndex = 5;
-            this.WhetherCopy.Text = "复制被更改对象";
+            this.WhetherCopy.Text = "复制被更改文件";
             this.WhetherCopy.UseVisualStyleBackColor = true;
             this.WhetherCopy.CheckedChanged += new System.EventHandler(this.WhetherCopy_CheckedChanged);
             // 
@@ -163,7 +163,7 @@ namespace FileWatcher
             this.WatchWrite.AutoSize = true;
             this.WatchWrite.Checked = true;
             this.WatchWrite.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.WatchWrite.Location = new System.Drawing.Point(289, 13);
+            this.WatchWrite.Location = new System.Drawing.Point(295, 13);
             this.WatchWrite.Name = "WatchWrite";
             this.WatchWrite.Size = new System.Drawing.Size(72, 16);
             this.WatchWrite.TabIndex = 8;
