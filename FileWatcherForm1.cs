@@ -17,7 +17,7 @@ namespace FileWatcher
         public FileWatcherForm1()
         {
             InitializeComponent();
-            Status.Text = "\t\t\t使用说明\n\n\n1、本程序可监视目录及文件的写入与更名并复制被更改文件；\n\n2、在左侧文本框中填入目录，一行填写一个目录，不可有空行。第一行目录为复制文件的目标写入目录，余下的目录为需监视的目录；\n\n目录填写示例（监视“\\\\192.168.1.1\\示例目录1”和“\\\\192.168.1.1\\示例目录2”并将更改写入“C:\\示例目录”）：\n\nC:\\示例目录\n\\\\192.168.1.1\\示例目录\n\\\\192.168.1.1\\示例目录2\n\n4、底部设置项中“包含子目录”仅在开始监视前可设置，“复制被更改文件”、“监视写入”、“监视重命名”和“延时”在开始监视前后均可设置。\n\n5、若同时设置复制文件和延时，则文件复制操作将在监视到文件更改数秒后执行以避免文件被占用产生错误。设置完成后点击“开关”复选框切换监视状态。\n\n\n\n\t\tlhtxq@live.com\t刘汉涛\t版权所有";
+            Status.Text = "\t\t\t使用说明\n\n\n1、本程序可监视目录及文件的写入与更名并复制被更改文件；\n\n2、在左侧文本框中填入目录，一行填写一个目录，不可有空行。第一行目录为复制文件的目标写入目录，余下的目录为需监视的目录；\n\n目录填写示例（监视“\\\\192.168.1.1\\示例目录1”和“\\\\192.168.1.1\\示例目录2”并将更改写入“C:\\示例目录”）：\n\nC:\\示例目录\n\\\\192.168.1.1\\示例目录1\n\\\\192.168.1.1\\示例目录2\n\n4、底部设置项中“包含子目录”仅在开始监视前可设置，“复制被更改文件”、“监视写入”、“监视重命名”和“延时”在开始监视前后均可设置。\n\n5、若同时设置复制文件和延时，则文件复制操作将在监视到文件更改数秒后执行以避免文件被占用产生错误。设置完成后点击“开关”复选框切换监视状态。\n\n\n\n\t\tlhtxq@live.com\t刘汉涛\t版权所有";
             NowTime.Text = "(当前系统时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ")";
         }
 
@@ -207,7 +207,7 @@ namespace FileWatcher
                     }
                     ChangedCount++;
                     StatusTips.Text = "(监视到 " + ChangedCount + " 项更改，复制完成 " + WritedCount + " 个文件，遇到 " + ErrorCount + " 个错误)";
-                    Status.Text = this.Status.Text + "\n" + ChangedCount + "、更名" + ChangedObject + "(" + DateTime.Now.ToString() + ")\t" + e.OldFullPath + " >>> " + e.FullPath + "\n";
+                    Status.Text = this.Status.Text + "\n" + ChangedCount + "、更名" + ChangedObject + "(" + DateTime.Now.ToString() + ")\t" + e.OldFullPath + "   >>>   " + e.FullPath + "\n";
                     Status.Select(Status.TextLength, 0); 
                     Status.ScrollToCaret();
                     if (WhetherCopy.Checked==true && !Directory.Exists(e.FullPath))
@@ -274,7 +274,7 @@ namespace FileWatcher
 
         internal void FolderErrorTips()
         {
-            this.Status.Text = this.Status.Text + "\n\n→→→程序遇到错误！(" + DateTime.Now.ToString() + ")\t请检查目录填写是否正确并确保软件拥有目标目录访问权限！\n";
+            this.Status.Text = this.Status.Text + "\n\n→→→程序遇到错误！(" + DateTime.Now.ToString() + ")   请检查目录填写是否正确并确保软件拥有目标目录访问权限！←←←\n";
             Status.Select(Status.TextLength, 0);
             Status.ScrollToCaret();
             StatusSwitch.Checked = false;
@@ -282,7 +282,7 @@ namespace FileWatcher
 
         private void WriteErrorTips(uint i)
         {
-            this.Status.Text = this.Status.Text + "\n→→→在复制文件时遇到错误！(" + DateTime.Now.ToString() + ")\t请检查目录权限或文件有效性！（" + i.ToString() + "）\n";
+            this.Status.Text = this.Status.Text + "\n→→→在复制文件时遇到错误！(" + DateTime.Now.ToString() + ")   请检查目录权限或文件有效性！（" + i.ToString() + "）←←←\n";
             Status.Select(Status.TextLength, 0);
             Status.ScrollToCaret();
         }
@@ -321,6 +321,22 @@ namespace FileWatcher
             else
             {
                 Delay.Enabled = false;
+            }
+        }
+
+        private void FileWatcherForm1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(StatusSwitch.Checked==true)
+            {
+                DialogResult ask = MessageBox.Show("监视运行中，是否结束监视并关闭本程序？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (ask == DialogResult.OK)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }
