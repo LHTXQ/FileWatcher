@@ -84,7 +84,7 @@ namespace FileWatcher
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(80, 10);
             label3.TabIndex = 7;
-            label3.Text = "版本号：1.5.0.4";
+            label3.Text = "版本号：1.5.2.2";
             // 
             // groupBox1
             // 

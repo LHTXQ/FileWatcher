@@ -23,10 +23,14 @@ namespace FileWatcher
 
         internal static string FilePath;//目标写入目录
         internal static string[] PathArr;//目录数组
-        internal static int ChangedCount = 0;//文件更改统计
-        internal static int WritedCount = 0;//写入文件数统计
-        internal static int ErrorCount = 0;//错误统计
+        internal static uint ChangedCount = 0;//文件更改统计
+        internal static uint WritedCount = 0;//写入文件数统计
+        internal static uint ErrorCount = 0;//错误数统计
+        internal static uint[] WriteErrorSerialNum = new uint[3000000];//写入错误文件序号存储数组
+        internal static uint WriteErrorSerialWritedCount=0;//写入错误文件序号存储数组已写入元素计数
+        private static uint WriteErrorSerialReadCount=0;//写入错误文件序号存储数组待读取元素计数
         FileSystemWatcher[] WatcherArr;
+
         private void Run()
         {
             FilePath = this.TargetPath.Text;
@@ -166,12 +170,12 @@ namespace FileWatcher
                         if (Delay.Checked == false)
                         {
                             WriteFiles NewWrite = new WriteFiles();
-                            NewWrite.WriteWithoutDelay(e.FullPath, FileName);
+                            NewWrite.WriteWithoutDelay(e.FullPath, FileName, ChangedCount);
                         }
                         else
                         {
                             WriteFiles NewWrite = new WriteFiles();
-                            NewWrite.WriteWithDelay(e.FullPath, FileName);
+                            NewWrite.WriteWithDelay(e.FullPath, FileName, ChangedCount);
                         }
                     }
                 }
@@ -211,12 +215,12 @@ namespace FileWatcher
                         if (Delay.Checked == false)
                         {
                             WriteFiles NewWrite = new WriteFiles();
-                            NewWrite.WriteWithoutDelay(e.FullPath, FileName);
+                            NewWrite.WriteWithoutDelay(e.FullPath, FileName, ChangedCount);
                         }
                         else
                         {
                             WriteFiles NewWrite = new WriteFiles();
-                            NewWrite.WriteWithDelay(e.FullPath, FileName);
+                            NewWrite.WriteWithDelay(e.FullPath, FileName, ChangedCount);
                         }
                     }
                 }
@@ -276,9 +280,9 @@ namespace FileWatcher
             StatusSwitch.Checked = false;
         }
 
-        internal void WriteErrorTips()
+        private void WriteErrorTips(uint i)
         {
-            this.Status.Text = this.Status.Text + "\n→→→程序遇到错误！(" + DateTime.Now.ToString() + ")\t请检查目录权限或文件有效性！\n";
+            this.Status.Text = this.Status.Text + "\n→→→在复制文件时遇到错误！(" + DateTime.Now.ToString() + ")\t请检查目录权限或文件有效性！（" + i.ToString() + "）\n";
             Status.Select(Status.TextLength, 0);
             Status.ScrollToCaret();
         }
@@ -297,14 +301,14 @@ namespace FileWatcher
         private void SyncTimer_Tick(object sender, EventArgs e)
         {
             NowTime.Text = "(当前系统时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ")";
-            if (WriteFiles.WriteError==true)
+            if (WriteErrorSerialReadCount < WriteErrorSerialWritedCount)
             {
-                WriteFiles.WriteError = false;
-                WriteErrorTips();
+                WriteErrorSerialReadCount++;
+                WriteErrorTips(WriteErrorSerialNum[WriteErrorSerialReadCount]);
             }
             if (StatusSwitch.Checked==true)
             {
-                StatusTips.Text = "(监视到 " + FileWatcherForm1.ChangedCount + " 项更改，复制完成 " + FileWatcherForm1.WritedCount + " 个文件，遇到 " + FileWatcherForm1.ErrorCount + " 个错误)";
+                StatusTips.Text = "(监视到 " + ChangedCount + " 项更改，复制完成 " + WritedCount + " 个文件，遇到 " + ErrorCount + " 个错误)";
             }
         }
 
@@ -321,10 +325,11 @@ namespace FileWatcher
         }
     }
 
+
+
     public class WriteFiles
     {
-        internal static Boolean WriteError = false;
-        internal void WriteWithoutDelay(string S, string N)
+        internal void WriteWithoutDelay(string S, string N, uint Serial)
         {
             try
             {
@@ -334,17 +339,20 @@ namespace FileWatcher
             catch
             {
                 FileWatcherForm1.ErrorCount++;
-                WriteError = true;
+                FileWatcherForm1.WriteErrorSerialWritedCount++;
+                FileWatcherForm1.WriteErrorSerialNum[FileWatcherForm1.WriteErrorSerialWritedCount] = Serial;
             }
         }
 
         private string DelayCopyFullPath;
         private string DelayFilename;
+        private uint DelaySerialNum;
         private System.Timers.Timer DelayTimer;
-        internal void WriteWithDelay(string S, string N)
+        internal void WriteWithDelay(string S, string N,uint Serial)
         {
             DelayCopyFullPath = S;
             DelayFilename = N;
+            DelaySerialNum = Serial;
             DelayTimer = new System.Timers.Timer();
             DelayTimer.Interval = FileWatcherForm1.DelayTime * 1000;
             DelayTimer.Elapsed += new System.Timers.ElapsedEventHandler(DelayTimer_Tick);
@@ -357,7 +365,7 @@ namespace FileWatcher
         {
             DelayTimer.Stop();
             DelayTimer.Dispose();
-            WriteWithoutDelay(DelayCopyFullPath,DelayFilename);
+            WriteWithoutDelay(DelayCopyFullPath,DelayFilename, DelaySerialNum);
         }
     }
 }
