@@ -1,20 +1,28 @@
 # 文件监视器（FileWatcher）
 
-![image](https://user-images.githubusercontent.com/38943319/130743850-90ed6451-6438-42ca-b88f-4159036e55b7.png)
+![image](https://user-images.githubusercontent.com/38943319/132454382-f51caad2-ecbc-410c-8bd7-2fa464d5ae53.png)
+
 
 
 可监视目录及文件的创建与更名并复制文件更改。
  
  
- 
-2021-08-25 文件监视器 版本号：1.5.2.3下载链接：https://github.com/LHTXQ/FileWatcher/releases/tag/1.5.2.3
+
+2021-08-27 文件监视器 版本号：1.5.2.4  下载链接：https://github.com/LHTXQ/FileWatcher/releases/tag/1.5.2.4
+
+	1、更改：提高状态同步频率；
+	2、更改：在填写参数有错误并尝试打开监视时自动关闭监视；
+	3、已知问题：监视目录中有不可读取的远程目录时不会归为第二点所指的错误类型，并且会卡很久才提示错误
+
+
+2021-08-25 文件监视器 版本号：1.5.2.3  下载链接：https://github.com/LHTXQ/FileWatcher/releases/tag/1.5.2.3
 
 	1、修复：修复了在写入错误提示后显示写入错误的文件编号错误的问题。
 	2、新增：在监视运行时关闭软件会二次确认。
 	3、更改：发布的软件运行平台由 X64 更改为 X86 。
 
 
-2021-08-25 文件监视器 版本号：1.5.2.2下载链接：https://github.com/LHTXQ/FileWatcher/releases/tag/1.5.2.2
+2021-08-25 文件监视器 版本号：1.5.2.2  下载链接：https://github.com/LHTXQ/FileWatcher/releases/tag/1.5.2.2
 
 	1、修复：修复了显示的写入错误提示数量与实际写入错误数不符的问题。
 	2、新增：在写入错误提示后显示写入错误的文件编号。
