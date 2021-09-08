@@ -41,7 +41,7 @@ namespace FileWatcher
             this.WatchRename = new System.Windows.Forms.CheckBox();
             this.WhetherCopy = new System.Windows.Forms.CheckBox();
             this.WatchWrite = new System.Windows.Forms.CheckBox();
-            this.TargetPath = new System.Windows.Forms.RichTextBox();
+            this.Parameters = new System.Windows.Forms.RichTextBox();
             this.StatusSwitch = new System.Windows.Forms.CheckBox();
             this.Status = new System.Windows.Forms.RichTextBox();
             this.StatusTips = new System.Windows.Forms.Label();
@@ -84,7 +84,7 @@ namespace FileWatcher
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(80, 10);
             label3.TabIndex = 7;
-            label3.Text = "版本号：1.5.2.3";
+            label3.Text = "版本号：1.5.2.4";
             // 
             // groupBox1
             // 
@@ -170,14 +170,16 @@ namespace FileWatcher
             this.WatchWrite.Text = "监视写入";
             this.WatchWrite.UseVisualStyleBackColor = true;
             // 
-            // TargetPath
+            // Parameters
             // 
-            this.TargetPath.DetectUrls = false;
-            this.TargetPath.Location = new System.Drawing.Point(12, 36);
-            this.TargetPath.Name = "TargetPath";
-            this.TargetPath.Size = new System.Drawing.Size(384, 366);
-            this.TargetPath.TabIndex = 0;
-            this.TargetPath.Text = "";
+            this.Parameters.BackColor = System.Drawing.SystemColors.Window;
+            this.Parameters.DetectUrls = false;
+            this.Parameters.Location = new System.Drawing.Point(12, 36);
+            this.Parameters.Name = "Parameters";
+            this.Parameters.Size = new System.Drawing.Size(384, 366);
+            this.Parameters.TabIndex = 0;
+            this.Parameters.Text = "";
+            this.Parameters.WordWrap = false;
             // 
             // StatusSwitch
             // 
@@ -243,7 +245,7 @@ namespace FileWatcher
             this.Controls.Add(label1);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.StatusSwitch);
-            this.Controls.Add(this.TargetPath);
+            this.Controls.Add(this.Parameters);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(816, 489);
@@ -261,7 +263,7 @@ namespace FileWatcher
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox TargetPath;
+        private System.Windows.Forms.RichTextBox Parameters;
         private System.Windows.Forms.CheckBox StatusSwitch;
         private System.Windows.Forms.CheckBox WhetherCopy;
         private System.Windows.Forms.CheckBox WhetherIncludeSub;

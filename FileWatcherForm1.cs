@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Data;
-//using System.Drawing;
+using System.Drawing;
 using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace FileWatcher
         public FileWatcherForm1()
         {
             InitializeComponent();
-            Status.Text = "\t\t\t使用说明\n\n\n1、本程序可监视目录及文件的写入与更名并复制被更改文件；\n\n2、在左侧文本框中填入目录，一行填写一个目录，不可有空行。第一行目录为复制文件的目标写入目录，余下的目录为需监视的目录；\n\n目录填写示例（监视“\\\\192.168.1.1\\示例目录1”和“\\\\192.168.1.1\\示例目录2”并将更改写入“C:\\示例目录”）：\n\nC:\\示例目录\n\\\\192.168.1.1\\示例目录1\n\\\\192.168.1.1\\示例目录2\n\n4、底部设置项中“包含子目录”仅在开始监视前可设置，“复制被更改文件”、“监视写入”、“监视重命名”和“延时”在开始监视前后均可设置。\n\n5、若同时设置复制文件和延时，则文件复制操作将在监视到文件更改数秒后执行以避免文件被占用产生错误。设置完成后点击“开关”复选框切换监视状态。\n\n\n\n\t\tlhtxq@live.com\t刘汉涛\t版权所有";
+            Status.Text = "\t\t\t使用说明\n\n\n1、本程序可监视目录及文件的写入与更名并复制被更改文件；\n\n2、在左侧文本框中填入目录，一行填写一个目录，不可有空行。第一行目录为复制文件的目标写入目录，余下的目录为需监视的目录，填写的被监视目录不可有相互包含或被包含关系；\n\n目录填写示例（监视“\\\\192.168.1.1\\示例目录1”和“\\\\192.168.1.1\\示例目录2”并将更改写入“C:\\示例目录”）：\n\nC:\\示例目录\n\\\\192.168.1.1\\示例目录1\n\\\\192.168.1.1\\示例目录2\n\n4、底部设置项中“包含子目录”仅在开始监视前可设置，“复制被更改文件”、“监视写入”、“监视重命名”和“延时”在开始监视前后均可设置。\n\n5、若同时设置复制文件和延时，则文件复制操作将在监视到文件更改数秒后执行以避免文件被占用产生错误。设置完成后点击“开关”复选框切换监视状态。\n\n\n\n\t\tlhtxq@live.com\t刘汉涛\t版权所有";
             NowTime.Text = "(当前系统时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ")";
         }
 
@@ -33,7 +33,7 @@ namespace FileWatcher
 
         private void Run()
         {
-            FilePath = this.TargetPath.Text;
+            FilePath = this.Parameters.Text;
             PathArr = FilePath.Split('\n');
             WatcherArr = new FileSystemWatcher[PathArr.Count()];
             if (PathArr.Count() > 1)
@@ -41,10 +41,10 @@ namespace FileWatcher
                 long num = PathArr.GetUpperBound(0);
                 for (int i = 0; i <= num; i++)
                 {
-                    if (PathArr[i].Substring(PathArr[i].Length - 1) == "\\")
-                    {
-                        PathArr[i] = PathArr[i].Substring(0, PathArr[i].Length - 1);
-                    }
+                    //if (PathArr[i].Substring(PathArr[i].Length - 1) == "\\")
+                    //{
+                    //    PathArr[i] = PathArr[i].Substring(0, PathArr[i].Length - 1);
+                    //}//用于删除路径末尾的“\”，但似乎没必要
                     if (i == 0)
                     {
                         Status.Text = this.Status.Text + "\n\n*************************************\n\n目标写入目录：\n" + PathArr[i] + "\n\n*************************************\n\n监视的目录：";
@@ -232,7 +232,8 @@ namespace FileWatcher
             if (this.StatusSwitch.Checked==true )
             {
                 WhetherIncludeSub.Enabled = false;
-                TargetPath.Enabled = false;
+                Parameters.ReadOnly = true;
+                Parameters.BackColor = SystemColors.Control;
                 this.Status.Text = "开始监视的时间：" + DateTime.Now.ToString();
                 StatusTips.Enabled = true;
                 ChangedCount = 0;
@@ -267,7 +268,8 @@ namespace FileWatcher
                 Status.ScrollToCaret();
                 StatusTips.Enabled = false;
                 WhetherIncludeSub.Enabled = true;
-                TargetPath.Enabled = true;
+                Parameters.ReadOnly= false;
+                Parameters.BackColor = SystemColors.Window;
             }
             
         }
